@@ -135,8 +135,8 @@ int main(int argc, char *argv[]) {
     printf("Enter lines. Full screen or empty line clears screen.\n"
            "Supports UTF-8. CTRL-D for exit.\n");
   }
-  char ndline[1024] = "CC2016 Darmstadt";
-  char line[1024] = "Energies Technologies";
+  char ndline[1024] = "Lorem Ipsum dolor sit amet, consectetur adpiscing elit.";
+  char line[1024] = "Duis ornare placerat efficitur. In hac habitasse platea dictumst.";
 
     int angle = 0;
   //while (fgets(line, sizeof(line), stdin)) {
@@ -163,8 +163,8 @@ int main(int argc, char *argv[]) {
     Color c = convertangletocolor(angle); 
     Color ndc = convertangletocolor(angle+180); 
     int last = rgb_matrix::DrawText(canvas, font, x, y + font.baseline(), c, line);
-    y += 2+ font.height();
-    int ndlast = rgb_matrix::DrawText(canvas, font, x, y +  font.baseline(), ndc, ndline);
+    int y2 = y + 2+ font.height();
+    int ndlast = rgb_matrix::DrawText(canvas, font, x, y2 +  font.baseline(), ndc, ndline);
      if ( last > ndlast)
     {
        max=last;
@@ -173,13 +173,20 @@ int main(int argc, char *argv[]) {
     {
        max=ndlast;
     }
+    int dist = 128 - max;
+    if( dist < 20)
+    {
+       dist = 20;
+    }
+    rgb_matrix::DrawText(canvas, font, x + max + dist , y + font.baseline(), c, line);
+    rgb_matrix::DrawText(canvas, font, x + max + dist , y2 +  font.baseline(), ndc, ndline);
     x-=1;
     if(x < - (max))
     {
-       x=128;
+       x=dist-1;
     }
     else{ max = ndlast;}
-    usleep(20000);
+    usleep(30000);
   }
   // Finished. Shut down the RGB matrix.
   canvas->Clear();
