@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
   if (isatty(STDIN_FILENO)) {
     // Only give a message if we are interactive. If connected via pipe, be quiet
     printf("Enter lines. Full screen or empty line clears screen.\n"
-           "Supports UTF-8. CTRL-D for exit.\n");
+           "Supports UTF-8. CTRL-C for exit.\n");
   }
   char ndline[1024] = "Lorem Ipsum dolor sit amet, consectetur adpiscing elit.";
   char line[1024] = "Duis ornare placerat efficitur. In hac habitasse platea dictumst.";
@@ -151,12 +151,12 @@ int main(int argc, char *argv[]) {
     int max = 0;
     if(ret == 1)
     {
-      // we have exactly n bytes to read 
-      strcpy(ndline,line);   
-      fgets(line, sizeof(line), stdin);
-    const size_t last = strlen(line);
+       // we have exactly n bytes to read 
+       strcpy(line,ndline);   
+       fgets(ndline, sizeof(ndline), stdin);
+       const size_t ndlast = strlen(ndline);
 
-    if (last > 0) line[last - 1] = '\0';  // remove newline.
+       if (ndlast > 0) ndline[ndlast - 1] = '\0';  // remove newline.
     }
     canvas->Clear();
     angle++;
